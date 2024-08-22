@@ -10,16 +10,15 @@ def register(request):
 
         if form.is_valid():
             user = form.save()      # save to db
-            login(request, user)    # log user in
             return JsonResponse({
                 'status': 'success',
                 'username': user.username,
-            })
+            }, status=200)
         else:
             return JsonResponse({
                 'status': 'error',
                 'error': form.errors,
-            })
+            }, status=400)
 
 @api_view(['POST'])
 def login(request):

@@ -8,7 +8,7 @@ module.exports = {
         standard: "3rem",
       },
       margin: {
-        standard: "2rem",
+        standard: "3rem",
       },
       borderRadius: {
         standard: "5px",
@@ -20,6 +20,11 @@ module.exports = {
       height: {
         navHeight: "7dvh",
         contentHeight: "93dvh",
+      },
+      screens: {
+        xlScreen: { max: "1280px" },
+        smScreen: { max: "600px" },
+        xsScreen: { max: "450px" },
       },
     },
   },

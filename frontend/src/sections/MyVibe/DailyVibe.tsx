@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useSpring, animated } from "@react-spring/web";
+import React from "react";
+import { Button } from "components/Misc/Button";
 
 interface Props {
   selectedVibe: string;
@@ -7,7 +7,9 @@ interface Props {
   journalEntry: string;
   setJournalEntry: (vibe: string) => void;
   submitVibe: (e: React.FormEvent) => void;
+  currentStreak: number;
   showSuccess: boolean;
+  lastSubmitDate: string;
 }
 
 interface descEmoji {
@@ -31,17 +33,12 @@ export const DailyVibe: React.FC<Props> = ({
   journalEntry,
   setJournalEntry,
   submitVibe,
+  currentStreak,
   showSuccess,
+  lastSubmitDate,
 }) => {
-  const [buttonHovered, setButtonHovered] = useState<boolean>(false);
-  const buttonHoverAnim = useSpring({
-    backgroundColor: buttonHovered ? "#DBAB1E" : "#2F6690",
-    color: buttonHovered ? "black" : "white",
-    config: { duration: 75 },
-  });
-
   return (
-    <div className="w-[55%] h-full">
+    <div className="w-[55%] xlScreen:w-full h-full">
       <div className="flex flex-col gap-y-3">
         <h2 className="font-bold">Today, I feel...</h2>
         <form
@@ -62,23 +59,18 @@ export const DailyVibe: React.FC<Props> = ({
             ))}
           </select>
           <textarea
-            className="w-full border-2 border-primary focus:border-2 focus:outline-none focus:border-secondary p-1 rounded-standard mt-2 h-[20rem]"
+            className="w-full border-2 border-primary focus:border-2 focus:outline-none focus:border-secondary p-1 rounded-standard mt-2 xlScreen:h-[15rem] h-[20rem]"
             placeholder="Talk about your day... (optional)"
             onChange={(e) => setJournalEntry(e.target.value)}
             value={journalEntry}
           ></textarea>
-          <div className="self-end justify-between w-full flex">
-            <div className="text-xl">Your streak: 25 days🔥</div>
-
-            <animated.button
-              style={buttonHoverAnim}
-              onMouseEnter={() => setButtonHovered(true)}
-              onMouseLeave={() => setButtonHovered(false)}
-              type="submit"
-              className=" py-1 w-24 border-0"
-            >
-              Submit
-            </animated.button>
+          <div className="self-end justify-between items-center w-full flex">
+            <div className="smScreen:text-lg text-xl">
+              Your streak: {currentStreak}{" "}
+              {currentStreak === 1 ? "day" : "days"}
+              {currentStreak > 0 ? "🔥" : ""}
+            </div>
+            <Button text="Submit" />
           </div>
         </form>
         {showSuccess && <div>Success</div>}

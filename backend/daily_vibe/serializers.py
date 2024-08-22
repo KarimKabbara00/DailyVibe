@@ -7,8 +7,7 @@ class DailyVibeSerializer(serializers.ModelSerializer):
         fields = ('id', 'mood', 'journal', 'date')
 
     def validate(self, data):
+        print(data)
         if not data['mood']:
             raise serializers.ValidationError("No mood entered.")
-        elif not data['date']:
-            raise serializers.ValidationError("No date entered.")
         return data

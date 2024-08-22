@@ -26,7 +26,7 @@ export const ViewVibe: React.FC = () => {
 
   useEffect(() => {}, []);
   return (
-    <div className="p-standard h-full">
+    <div className="p-standard h-full overflow-y-auto">
       <div className="cursor-pointer mb-4 text-2xl hover:underline hover:text-secondary" onClick={goBack}>
         {"<"} Back
       </div>

@@ -44,21 +44,17 @@ export const VibeEntry: React.FC<Props> = ({ vibe }) => {
   return (
     <>
       {vibe && (
-        <animated.div style={fadeIn} className="flex flex-col gap-y-4">
-          <h1>
-            On {vibe.date}, you felt{" "}
-            <span className="text-secondary font-bold">
-              {moodToDescription[vibe.mood]}
-            </span>
-            {moodToEmoji[vibe.mood]}.
+        <animated.div style={fadeIn} className="flex flex-col gap-y-4 xsScreen:gap-y-6 pb-12">
+          <h1 className="flex flex-wrap gap-x-2">
+            <div>On {vibe.date},</div>
+            <div>
+              you felt <span className="text-secondary font-bold pr-1">{moodToDescription[vibe.mood]}</span>
+              {moodToEmoji[vibe.mood]}
+            </div>
           </h1>
           <div>
-            <h2 className="border-b-2 w-fit border-primary boredr-primary">
-              Journal Entry
-            </h2>
-            <div className="pt-1 text-lg">
-              {vibe.journal.length > 0 ? vibe.journal : "No journal entry."}
-            </div>
+            <div className="border-b-2 text-2xl w-fit pb-0.5 border-primary boredr-primary">Journal Entry</div>
+            <div className="pt-2 text-xl">{vibe.journal.length > 0 ? vibe.journal : "No journal entry."}</div>
           </div>
         </animated.div>
       )}

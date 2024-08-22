@@ -1,57 +1,78 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useSpring, animated } from "@react-spring/web";
+import { InputField } from "components/Accounts/InputField";
+import { Button } from "components/Misc/Button";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
-interface Props {
-  setAccessToken: (at: string) => void;
-  setRefreshToken: (rt: string) => void;
-}
-
-export const SignIn: React.FC<Props> = ({
-  setAccessToken,
-  setRefreshToken,
-}) => {
+export const SignIn: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const navigate = useNavigate();
 
-  const registerUser = (event: React.FormEvent) => {
+  const signIn = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log(username, password);
     axios
       .post("http://127.0.0.1:8000/api/signin/", {
         username: username,
         password: password,
       })
       .then((res) => {
-        setAccessToken(res.data.access);
-        setRefreshToken(res.data.refresh);
+        Cookies.set("accessToken", res.data.access);
+        Cookies.set("refreshToken", res.data.refresh);
+        toast.success("Signed in!");
+        navigate("/myvibe");
       })
       .catch((err) => {
+        toast.error("Invalid credentials.");
         console.log(err);
       });
   };
 
+  const goToSignUp = () => {
+    navigate("/signup");
+  };
+
+  const fadeIn = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    config: { duration: 100 },
+  });
+
   return (
-    <div>
-      <form onSubmit={registerUser}>
-        <input
-          value={username}
-          onChange={(e) => {
-            setUsername(e.target.value);
-          }}
-          type="text"
-          placeholder="Username"
-        ></input>
-        <input
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-          value={password}
-          type="password"
-          placeholder="Password"
-        ></input>
-        <button type="submit">Sign In</button>
-      </form>
-    </div>
+    <animated.div style={fadeIn} className="w-full h-contentHeight">
+      <div className="mx-auto w-[32rem] smScreen:w-[28rem] xsScreen:w-[20rem] mt-32">
+        <h1 className="mb-4">Welcome back 👋</h1>
+        <form className="flex flex-col w-full gap-y-7" onSubmit={signIn}>
+          <InputField
+            value={username}
+            setValue={setUsername}
+            type="text"
+            placeholder="Username"
+          />
+          <InputField
+            value={password}
+            setValue={setPassword}
+            type="password"
+            placeholder="Password"
+          />
+          <div className="w-full flex xsScreen:flex-col-reverse xsScreen:items-start xsScreen:gap-y-3 justify-between items-end">
+            <span>
+              Don't have an account?{" "}
+              <span
+                onClick={goToSignUp}
+                className="underline hover:text-secondary cursor-pointer"
+              >
+                Sign up
+              </span>
+              .
+            </span>
+            <Button text="Sign In" />
+          </div>
+        </form>
+      </div>
+    </animated.div>
   );
 };

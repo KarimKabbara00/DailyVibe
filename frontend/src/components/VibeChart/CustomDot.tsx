@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { DotProps } from "recharts";
 
-const moodToEmoji: { [key: number]: string } = {
+const numToEmoji: { [key: number]: string } = {
   0: "😡", // Angry
   1: "😤", // Frustrated
   2: "😟", // Anxious
@@ -28,7 +28,7 @@ export const CustomDot: React.FC<DotProps & Props> = ({ dotData, ...props }) => 
   const { cx, cy, value } = props;
   return (
     <text className="cursor-pointer" onClick={() => viewVibe(dotData)} x={cx} y={cy} dy={5} textAnchor="middle" fontSize={16}>
-      {moodToEmoji[value]}
+      {numToEmoji[value]}
     </text>
   );
 };

@@ -13,4 +13,5 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/signup/', account_views.register, name="signup"),
     path('api/signin/', TokenObtainPairView.as_view(), name="get_token"),
+    path('api/data/get_all_vibes/', daily_vibe_views.get_all_vibes, name="all_vibes"),
 ]
