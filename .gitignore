@@ -5,7 +5,8 @@
 /frontend/.pnp
 /frontend.pnp.js
 
-/backend/.env
+# Removed for demo
+# /backend/.env
 
 # testing
 /frontend/coverage
@@ -13,7 +14,8 @@
 # production
 /frontend/build
 
-/frontend/.env
+# Removed for demo
+# /frontend/.env
 
 # misc
 .DS_Store
