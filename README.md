@@ -51,13 +51,21 @@ The sign in and sign up features are <b>implemented</b> and <b>functional</b>. T
 
 Note: The frontend directory is only to see the ReactJS code. The SPA static files are hosted by Django.
 
-1.  Open your CLI
+1.  Download the code.
+
+1.  Extract the files.
+
+1.  Open your CLI.
 
 1.  Navigate to /daily_vibe
 
-1.  Run the following command
+1.  Activate the shell:
 
         pipenv shell
+    
+1.  Install dependencies:
+
+        pipenv sync
 
 1.  navigate to /daily_vibe/backend, then run
 
