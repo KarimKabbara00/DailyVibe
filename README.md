@@ -59,6 +59,10 @@ Note: The frontend directory is only to see the ReactJS code. The SPA static fil
 
 1.  Navigate to /DailyVibe-master. This folder should contain the backend and frontend directories.
 
+1.  Install pipenv if you do not have it.
+
+        pip install pipenv
+
 1.  Activate the shell:
 
         pipenv shell
