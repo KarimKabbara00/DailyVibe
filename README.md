@@ -57,7 +57,7 @@ Note: The frontend directory is only to see the ReactJS code. The SPA static fil
 
 1.  Open your CLI.
 
-1.  Navigate to /daily_vibe
+1.  Navigate to /DailyVibe-master. This folder should contain the backend and frontend directories.
 
 1.  Activate the shell:
 
@@ -67,7 +67,7 @@ Note: The frontend directory is only to see the ReactJS code. The SPA static fil
 
         pipenv sync
 
-1.  navigate to /daily_vibe/backend, then run
+1.  navigate to /DailyVibe-master/backend, then run
 
         python manage.py runserver
 
