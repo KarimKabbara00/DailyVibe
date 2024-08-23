@@ -27,15 +27,17 @@ export const Header: React.FC = () => {
       >
         Daily Vibe
       </div>
-      {Cookies.get("accessToken") && (
-        <div
-          onClick={signOut}
-          className="text-white text-xl cursor-pointer hover:underline"
-        >
-          Sign Out
-        </div>
-      )}
-      {!Cookies.get("accessToken") && (
+      {Cookies.get("accessToken") &&
+        Cookies.get("accessToken") !== "DEMO ACCESS TOKEN" && (
+          <div
+            onClick={signOut}
+            className="text-white text-xl cursor-pointer hover:underline"
+          >
+            Sign Out
+          </div>
+        )}
+      {(!Cookies.get("accessToken") ||
+        Cookies.get("accessToken") === "DEMO ACCESS TOKEN") && (
         <div
           onClick={goToSignIn}
           className="text-white text-xl cursor-pointer hover:underline"

@@ -7,6 +7,8 @@ import { Button } from "components/Misc/Button";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
+const baseUrl = process.env.REACT_APP_API_BASE_URL;
+
 export const SignIn: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -14,20 +16,32 @@ export const SignIn: React.FC = () => {
 
   const signIn = (event: React.FormEvent) => {
     event.preventDefault();
+    const loadingToast = toast.loading("Signing you in...");
     axios
-      .post("http://127.0.0.1:8000/api/signin/", {
-        username: username,
-        password: password,
-      })
+      .post(
+        `${baseUrl}/api/signin/`,
+        {
+          username: username,
+          password: password,
+        },
+        {
+          headers: {
+            "X-CSRFToken": Cookies.get("csrftoken"),
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
       .then((res) => {
         Cookies.set("accessToken", res.data.access);
         Cookies.set("refreshToken", res.data.refresh);
+        toast.remove(loadingToast);
         toast.success("Signed in!");
         navigate("/myvibe");
       })
       .catch((err) => {
+        toast.remove(loadingToast);
         toast.error("Invalid credentials.");
-        console.log(err);
       });
   };
 
@@ -69,7 +83,7 @@ export const SignIn: React.FC = () => {
               </span>
               .
             </span>
-            <Button text="Sign In" />
+            <Button text="Sign In" disabled={false} />
           </div>
         </form>
       </div>

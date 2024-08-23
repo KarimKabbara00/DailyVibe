@@ -34,7 +34,7 @@ export const VibeChart: React.FC<Props> = ({ vibes, timespan, setTimespan }) => 
   };
 
   return (
-    <div className="flex flex-col xlScreen:w-full w-7/12 gap-y-6 pb-24">
+    <div className="flex flex-col xlScreen:w-full w-7/12 gap-y-3 pb-24">
       <div className="flex smScreen:flex-col smScreen:items-start smScreen:gap-y-2 justify-between items-end xlScreen:px-0 px-6">
         <div>
           <h2 className="font-bold">Vibe Trend</h2>
@@ -48,14 +48,18 @@ export const VibeChart: React.FC<Props> = ({ vibes, timespan, setTimespan }) => 
           </select>
         </div>
       </div>
-      <ResponsiveContainer width="100%" height={400}>
-        <LineChart width={730} data={vibes} margin={{ top: 10, right: 30, left: 20, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis tick={{ dy: 15 }} style={{ marginTop: "20rem", paddingTop: "20rem" }} dataKey="date" />
-          <YAxis tick={{ dx: -15 }} fontSize={12} tickFormatter={(value) => numToDescription[value]} domain={[0, 7]} ticks={[0, 1, 2, 3, 4, 5, 6, 7]} />
-          <Line type="monotone" dataKey="mood" activeDot={false} stroke="#8884d8" dot={(props) => propsWithoutKey(props)} />
-        </LineChart>
-      </ResponsiveContainer>
+
+      <div className="relative">
+        <ResponsiveContainer className="z-10" width="100%" height={450}>
+          <LineChart width={730} data={vibes} margin={{ top: 15, right: 30, left: 20, bottom: 20 }}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis tick={{ dy: 15 }} angle={-45} style={{ marginTop: "20rem", paddingTop: "20rem" }} dataKey="date" />
+            <YAxis tick={{ dx: -15 }} fontSize={12} tickFormatter={(value) => numToDescription[value]} domain={[0, 7]} ticks={[0, 1, 2, 3, 4, 5, 6, 7]} />
+            <Line type="monotone" dataKey="mood" activeDot={false} stroke="#8884d8" dot={(props) => propsWithoutKey(props)} />
+          </LineChart>
+        </ResponsiveContainer>
+        {vibes.length === 0 && <div className="absolute z-20 w-full text-center text-black top-44 ">You have no entries in the last {timespan} days.</div>}
+      </div>
     </div>
   );
 };

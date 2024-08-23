@@ -5,6 +5,9 @@ import { Button } from "components/Misc/Button";
 import { useNavigate } from "react-router-dom";
 import { useSpring, animated } from "@react-spring/web";
 import toast from "react-hot-toast";
+import Cookies from "js-cookie";
+
+const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
 export const SignUp = () => {
   const [username, setUsername] = useState<string>("");
@@ -16,24 +19,42 @@ export const SignUp = () => {
   const registerUser = (event: React.FormEvent) => {
     event.preventDefault();
 
-    console.log(passwordReqMet);
     if (!passwordReqMet) {
       toast.error("Password requirements not met!");
       return;
     }
+    const loadingToast = toast.loading("Creating account...");
     axios
-      .post("http://127.0.0.1:8000/api/signup/", {
-        username: username,
-        password1: password,
-        password2: confirmPassword,
-      })
+      .post(
+        `${baseUrl}/api/signup/`,
+        {
+          username: username,
+          password1: password,
+          password2: confirmPassword,
+        },
+        {
+          headers: {
+            "X-CSRFToken": Cookies.get("csrftoken"),
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
       .then((res) => {
         toast.success("Account created! Sign in.");
-        console.log(res.data);
+        toast.remove(loadingToast);
+        navigate("/signin");
       })
       .catch((err) => {
-        let error = err.response.data.error.username[0];
-        toast.error(error);
+        toast.remove(loadingToast);
+        let err_response = err.response;
+        console.log(err_response);
+        if (!err_response) {
+          toast.error("Error signing up. Try again.");
+          return;
+        } else if (err.response.data.error.username) {
+          toast.error(err.response.data.error.username[0]);
+        }
       });
   };
 
@@ -111,7 +132,7 @@ export const SignUp = () => {
               </span>
               .
             </span>
-            <Button text="Sign Up" />
+            <Button text="Sign Up" disabled={false} />
           </div>
         </form>
       </div>
