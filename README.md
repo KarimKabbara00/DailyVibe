@@ -1,6 +1,6 @@
 # Daily Vibe
 
-### A daily mood tracker | Designed for Roulettech Inc. (Kangacook) assessment
+### A daily mood tracker
 
 Daily vibe is a daily mood tracker designed to give you insight on your 'vibe' through the days, weeks, and years.
 
